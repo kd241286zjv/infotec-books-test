@@ -55,8 +55,15 @@ async function removeAuthor() {
   }
 }
 
-onMounted(() => { void loadAuthor() })
-watch(() => route.params.id, () => { void loadAuthor() })
+onMounted(() => {
+  void loadAuthor()
+})
+watch(
+  () => route.params.id,
+  () => {
+    void loadAuthor()
+  },
+)
 </script>
 
 <template>
@@ -65,7 +72,9 @@ watch(() => route.params.id, () => { void loadAuthor() })
     <p v-if="loading" class="catalog-status" aria-live="polite">Загружаем автора…</p>
     <div v-else-if="notFound" class="catalog-status catalog-status--error" role="alert">
       <p>Автор не найден или больше не доступен.</p>
-      <RouterLink class="button button--quiet" :to="{ name: 'authors' }">Вернуться к авторам</RouterLink>
+      <RouterLink class="button button--quiet" :to="{ name: 'authors' }"
+        >Вернуться к авторам</RouterLink
+      >
     </div>
     <div v-else-if="error" class="catalog-status catalog-status--error" role="alert">
       <p>{{ error }}</p>
@@ -76,12 +85,22 @@ watch(() => route.params.id, () => { void loadAuthor() })
       <h1>{{ author.full_name }}</h1>
       <h2>Книги</h2>
       <ul v-if="author.books?.length" class="author-books">
-        <li v-for="book in author.books" :key="book.id"><RouterLink :to="{ name: 'book-detail', params: { id: book.id } }">{{ book.title }} <span>({{ book.year }})</span></RouterLink></li>
+        <li v-for="book in author.books" :key="book.id">
+          <RouterLink :to="{ name: 'book-detail', params: { id: book.id } }"
+            >{{ book.title }} <span>({{ book.year }})</span></RouterLink
+          >
+        </li>
       </ul>
       <p v-else class="muted">Книг пока нет.</p>
       <div v-if="auth.isAuthenticated.value" class="book-detail__actions">
-        <RouterLink class="button button--quiet" :to="{ name: 'author-edit', params: { id: author.id } }">Изменить</RouterLink>
-        <button class="button button--danger" :disabled="deleting" @click="removeAuthor">{{ deleting ? 'Удаляем…' : 'Удалить' }}</button>
+        <RouterLink
+          class="button button--quiet"
+          :to="{ name: 'author-edit', params: { id: author.id } }"
+          >Изменить</RouterLink
+        >
+        <button class="button button--danger" :disabled="deleting" @click="removeAuthor">
+          {{ deleting ? 'Удаляем…' : 'Удалить' }}
+        </button>
       </div>
     </article>
   </section>

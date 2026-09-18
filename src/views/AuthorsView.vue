@@ -32,15 +32,18 @@ async function removeAuthor(author: AuthorShort) {
     await deleteAuthor(author.id)
     await loadAuthors()
   } catch (reason) {
-    error.value = reason instanceof ApiError && reason.status === 404
-      ? 'Этот автор уже удалён.'
-      : 'Не удалось удалить автора. Попробуйте ещё раз.'
+    error.value =
+      reason instanceof ApiError && reason.status === 404
+        ? 'Этот автор уже удалён.'
+        : 'Не удалось удалить автора. Попробуйте ещё раз.'
   } finally {
     deletingId.value = null
   }
 }
 
-onMounted(() => { void loadAuthors() })
+onMounted(() => {
+  void loadAuthors()
+})
 </script>
 
 <template>
@@ -51,7 +54,9 @@ onMounted(() => { void loadAuthors() })
         <h1>Авторы</h1>
         <p class="muted">Находите авторов и книги из их библиографии.</p>
       </div>
-      <RouterLink v-if="auth.isAuthenticated.value" class="button" :to="{ name: 'author-create' }">Добавить автора</RouterLink>
+      <RouterLink v-if="auth.isAuthenticated.value" class="button" :to="{ name: 'author-create' }"
+        >Добавить автора</RouterLink
+      >
     </header>
 
     <form class="authors-search" @submit.prevent="loadAuthors">
@@ -69,10 +74,20 @@ onMounted(() => { void loadAuthors() })
     </div>
     <div v-else-if="authors.length" class="authors-list">
       <article v-for="author in authors" :key="author.id" class="author-card">
-        <RouterLink class="author-card__link" :to="{ name: 'author-detail', params: { id: author.id } }">{{ author.full_name }}</RouterLink>
+        <RouterLink
+          class="author-card__link"
+          :to="{ name: 'author-detail', params: { id: author.id } }"
+          >{{ author.full_name }}</RouterLink
+        >
         <div v-if="auth.isAuthenticated.value" class="author-card__actions">
           <RouterLink :to="{ name: 'author-edit', params: { id: author.id } }">Изменить</RouterLink>
-          <button class="link-danger" :disabled="deletingId === author.id" @click="removeAuthor(author)">{{ deletingId === author.id ? 'Удаляем…' : 'Удалить' }}</button>
+          <button
+            class="link-danger"
+            :disabled="deletingId === author.id"
+            @click="removeAuthor(author)"
+          >
+            {{ deletingId === author.id ? 'Удаляем…' : 'Удалить' }}
+          </button>
         </div>
       </article>
     </div>

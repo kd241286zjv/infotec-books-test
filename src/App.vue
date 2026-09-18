@@ -21,8 +21,12 @@ function logout() {
       <RouterLink :to="{ name: 'reports' }">Отчёты</RouterLink>
     </nav>
     <div class="header-actions">
-      <RouterLink v-if="isAuthenticated" class="button" :to="{ name: 'book-create' }">Добавить книгу</RouterLink>
-      <button v-if="isAuthenticated" class="button button--quiet" type="button" @click="logout">Выйти</button>
+      <RouterLink v-if="isAuthenticated" class="button" :to="{ name: 'book-create' }"
+        >Добавить книгу</RouterLink
+      >
+      <button v-if="isAuthenticated" class="button button--quiet" type="button" @click="logout">
+        Выйти
+      </button>
       <RouterLink v-else class="button" :to="{ name: 'login' }">Войти</RouterLink>
     </div>
   </header>

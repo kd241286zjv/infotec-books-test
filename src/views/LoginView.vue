@@ -26,9 +26,10 @@ async function submit() {
     const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/books'
     await router.push(redirect)
   } catch (reason) {
-    error.value = reason instanceof ApiError && reason.status === 401
-      ? 'Неверный логин или пароль.'
-      : 'Не удалось выполнить вход. Попробуйте ещё раз.'
+    error.value =
+      reason instanceof ApiError && reason.status === 401
+        ? 'Неверный логин или пароль.'
+        : 'Не удалось выполнить вход. Попробуйте ещё раз.'
   } finally {
     submitting.value = false
   }
@@ -42,9 +43,13 @@ async function submit() {
     <p class="muted">Авторизуйтесь, чтобы добавлять, редактировать и удалять книги и авторов.</p>
     <form class="auth-form" @submit.prevent="submit">
       <label>Логин<input v-model="username" required autocomplete="username" /></label>
-      <label>Пароль<input v-model="password" required type="password" autocomplete="current-password" /></label>
+      <label
+        >Пароль<input v-model="password" required type="password" autocomplete="current-password"
+      /></label>
       <p v-if="error" class="error" role="alert">{{ error }}</p>
-      <button class="button" :disabled="submitting" :aria-busy="submitting">{{ submitting ? 'Входим…' : 'Войти' }}</button>
+      <button class="button" :disabled="submitting" :aria-busy="submitting">
+        {{ submitting ? 'Входим…' : 'Войти' }}
+      </button>
     </form>
   </section>
 </template>

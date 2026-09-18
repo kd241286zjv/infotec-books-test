@@ -35,7 +35,7 @@ async function loadBook() {
     book.value = await getBook(id)
   } catch (reason) {
     if (reason instanceof ApiError && reason.status === 404) notFound.value = true
-    else error.value = reason instanceof Error ? reason.message : 'Не удалось загрузить книгу. Попробуйте ещё раз.'
+    else error.value = 'Не удалось загрузить книгу. Попробуйте ещё раз.'
   } finally {
     loading.value = false
   }
@@ -52,14 +52,21 @@ async function removeBook() {
     await router.push({ name: 'books' })
   } catch (reason) {
     if (reason instanceof ApiError && reason.status === 404) notFound.value = true
-    else error.value = reason instanceof Error ? reason.message : 'Не удалось удалить книгу. Попробуйте ещё раз.'
+    else error.value = 'Не удалось удалить книгу. Попробуйте ещё раз.'
   } finally {
     deleting.value = false
   }
 }
 
-onMounted(() => { void loadBook() })
-watch(() => route.params.id, () => { void loadBook() })
+onMounted(() => {
+  void loadBook()
+})
+watch(
+  () => route.params.id,
+  () => {
+    void loadBook()
+  },
+)
 </script>
 
 <template>
@@ -69,7 +76,9 @@ watch(() => route.params.id, () => { void loadBook() })
     <div v-if="loading" class="catalog-status" aria-live="polite">Загружаем книгу…</div>
     <div v-else-if="notFound" class="catalog-status catalog-status--error" role="alert">
       <p>Книга не найдена или больше не доступна.</p>
-      <RouterLink class="button button--quiet" :to="{ name: 'books' }">Вернуться в каталог</RouterLink>
+      <RouterLink class="button button--quiet" :to="{ name: 'books' }"
+        >Вернуться в каталог</RouterLink
+      >
     </div>
     <div v-else-if="error" class="catalog-status catalog-status--error" role="alert">
       <p>{{ error }}</p>
@@ -83,14 +92,24 @@ watch(() => route.params.id, () => { void loadBook() })
       <div class="book-detail__content">
         <p class="eyebrow">{{ book.year }}</p>
         <h1>{{ book.title }}</h1>
-        <p class="book-detail__authors">{{ book.authors.map((author) => author.full_name).join(', ') || 'Автор не указан' }}</p>
+        <p class="book-detail__authors">
+          {{ book.authors.map((author) => author.full_name).join(', ') || 'Автор не указан' }}
+        </p>
         <p v-if="book.isbn" class="book-isbn">ISBN {{ book.isbn }}</p>
-        <p v-if="book.description" class="book-detail__description">{{ book.description }}</p>
+        <p v-if="book.description" class="book-detail__description">
+          {{ book.description }}
+        </p>
         <p v-else class="muted">Описание отсутствует.</p>
 
         <div v-if="auth.isAuthenticated.value" class="book-detail__actions">
-          <RouterLink class="button button--quiet" :to="{ name: 'book-edit', params: { id: book.id } }">Изменить</RouterLink>
-          <button class="button button--danger" :disabled="deleting" @click="removeBook">{{ deleting ? 'Удаляем…' : 'Удалить' }}</button>
+          <RouterLink
+            class="button button--quiet"
+            :to="{ name: 'book-edit', params: { id: book.id } }"
+            >Изменить</RouterLink
+          >
+          <button class="button button--danger" :disabled="deleting" @click="removeBook">
+            {{ deleting ? 'Удаляем…' : 'Удалить' }}
+          </button>
         </div>
       </div>
     </article>

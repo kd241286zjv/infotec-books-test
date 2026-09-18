@@ -28,7 +28,9 @@ function routeBookId() {
 
 function apiMessage(reason: unknown, action: 'load' | 'save') {
   if (reason instanceof ApiError && reason.status === 404) return 'Книга не найдена.'
-  return action === 'load' ? 'Не удалось загрузить данные формы. Попробуйте ещё раз.' : 'Не удалось сохранить книгу. Проверьте данные и повторите попытку.'
+  return action === 'load'
+    ? 'Не удалось загрузить данные формы. Попробуйте ещё раз.'
+    : 'Не удалось сохранить книгу. Проверьте данные и повторите попытку.'
 }
 
 function fillForm(book: Book) {
@@ -68,7 +70,8 @@ function selectCover(event: Event) {
 function validate() {
   if (!title.value.trim()) return 'Введите название книги.'
   const numericYear = Number(year.value)
-  if (!year.value || !Number.isInteger(numericYear) || numericYear < 0) return 'Введите корректный год издания.'
+  if (!year.value || !Number.isInteger(numericYear) || numericYear < 0)
+    return 'Введите корректный год издания.'
   if (selectedAuthors.value.length === 0) return 'Выберите хотя бы одного автора.'
   if (!editing.value && !cover.value) return 'Выберите файл обложки.'
   return null
@@ -90,10 +93,30 @@ async function submit() {
       const id = routeBookId()
       if (!id) throw new ApiError('Not found', 404)
       savedBook = cover.value
-        ? await updateBook(id, { title: title.value.trim(), year: numericYear, description: description.value, isbn: isbn.value, author_ids: selectedAuthors.value, cover: cover.value })
-        : await patchBook(id, { title: title.value.trim(), year: numericYear, description: description.value, isbn: isbn.value, author_ids: selectedAuthors.value })
+        ? await updateBook(id, {
+            title: title.value.trim(),
+            year: numericYear,
+            description: description.value,
+            isbn: isbn.value,
+            author_ids: selectedAuthors.value,
+            cover: cover.value,
+          })
+        : await patchBook(id, {
+            title: title.value.trim(),
+            year: numericYear,
+            description: description.value,
+            isbn: isbn.value,
+            author_ids: selectedAuthors.value,
+          })
     } else {
-      savedBook = await createBook({ title: title.value.trim(), year: numericYear, description: description.value, isbn: isbn.value, author_ids: selectedAuthors.value, cover: cover.value as File })
+      savedBook = await createBook({
+        title: title.value.trim(),
+        year: numericYear,
+        description: description.value,
+        isbn: isbn.value,
+        author_ids: selectedAuthors.value,
+        cover: cover.value as File,
+      })
     }
     await router.push({ name: 'book-detail', params: { id: savedBook.id } })
   } catch (reason) {
@@ -103,7 +126,9 @@ async function submit() {
   }
 }
 
-onMounted(() => { void loadForm() })
+onMounted(() => {
+  void loadForm()
+})
 </script>
 
 <template>
@@ -113,7 +138,11 @@ onMounted(() => { void loadForm() })
     <h1>{{ editing ? 'Изменить книгу' : 'Новая книга' }}</h1>
 
     <p v-if="loading" class="catalog-status" aria-live="polite">Загружаем форму…</p>
-    <div v-else-if="error && !authors.length" class="catalog-status catalog-status--error" role="alert">
+    <div
+      v-else-if="error && !authors.length"
+      class="catalog-status catalog-status--error"
+      role="alert"
+    >
       <p>{{ error }}</p>
       <button class="button button--quiet" type="button" @click="loadForm">Повторить</button>
     </div>
@@ -141,6 +170,9 @@ onMounted(() => { void loadForm() })
           <input v-model="selectedAuthors" type="checkbox" :value="author.id" />
           {{ author.full_name }}
         </label>
+        <p v-if="!authors.length" class="form-hint">
+          Нет доступных авторов. Сначала добавьте автора в каталоге авторов.
+        </p>
       </fieldset>
 
       <div v-if="editing && currentCoverUrl" class="current-cover">
@@ -148,7 +180,10 @@ onMounted(() => { void loadForm() })
         <img :src="currentCoverUrl" alt="Текущая обложка книги" />
       </div>
       <label>
-        <span>{{ editing ? 'Новая обложка' : 'Обложка' }} <small v-if="editing">Необязательно</small></span>
+        <span
+          >{{ editing ? 'Новая обложка' : 'Обложка' }}
+          <small v-if="editing">Необязательно</small></span
+        >
         <input type="file" accept="image/*" :required="!editing" @change="selectCover" />
         <small v-if="cover">Выбран файл: {{ cover.name }}</small>
         <small v-else-if="editing">Без нового файла будут обновлены только текстовые поля.</small>
@@ -156,7 +191,9 @@ onMounted(() => { void loadForm() })
 
       <p v-if="error" class="error" role="alert">{{ error }}</p>
       <div class="form-actions">
-        <button class="button" :disabled="submitting" :aria-busy="submitting">{{ submitting ? 'Сохраняем…' : 'Сохранить' }}</button>
+        <button class="button" :disabled="submitting" :aria-busy="submitting">
+          {{ submitting ? 'Сохраняем…' : 'Сохранить' }}
+        </button>
         <RouterLink class="button button--quiet" :to="{ name: 'books' }">Отмена</RouterLink>
       </div>
     </form>

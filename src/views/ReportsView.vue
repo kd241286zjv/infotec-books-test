@@ -27,9 +27,10 @@ async function submit() {
   try {
     report.value = await getTopAuthors(selectedYear)
   } catch (reason) {
-    error.value = reason instanceof ApiError && reason.status === 400
-      ? 'Для этого отчёта требуется корректный год.'
-      : 'Не удалось загрузить отчёт. Попробуйте ещё раз.'
+    error.value =
+      reason instanceof ApiError && reason.status === 400
+        ? 'Для этого отчёта требуется корректный год.'
+        : 'Не удалось загрузить отчёт. Попробуйте ещё раз.'
   } finally {
     loading.value = false
   }
@@ -51,7 +52,9 @@ async function submit() {
         <span>Год</span>
         <input v-model="year" required type="number" min="0" step="1" inputmode="numeric" />
       </label>
-      <button class="button" :disabled="loading" :aria-busy="loading">{{ loading ? 'Загружаем…' : 'Показать отчёт' }}</button>
+      <button class="button" :disabled="loading" :aria-busy="loading">
+        {{ loading ? 'Загружаем…' : 'Показать отчёт' }}
+      </button>
     </form>
 
     <p v-if="loading" class="catalog-status" aria-live="polite">Строим отчёт…</p>
@@ -63,8 +66,20 @@ async function submit() {
       <p v-if="!report.items.length" class="catalog-status">За этот год данных нет.</p>
       <div v-else class="report-table-wrap">
         <table>
-          <thead><tr><th scope="col">Место</th><th scope="col">Автор</th><th scope="col">Книг</th></tr></thead>
-          <tbody><tr v-for="author in report.items" :key="author.author_id"><td>{{ author.rank }}</td><td>{{ author.full_name }}</td><td>{{ author.books_count }}</td></tr></tbody>
+          <thead>
+            <tr>
+              <th scope="col">Место</th>
+              <th scope="col">Автор</th>
+              <th scope="col">Книг</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="author in report.items" :key="author.author_id">
+              <td>{{ author.rank }}</td>
+              <td>{{ author.full_name }}</td>
+              <td>{{ author.books_count }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </section>

@@ -39,8 +39,8 @@ async function loadBooks(page = 1) {
     })
     books.value = result.items
     pagination.value = result.pagination
-  } catch (reason) {
-    error.value = reason instanceof Error ? reason.message : 'Не удалось загрузить каталог. Попробуйте ещё раз.'
+  } catch {
+    error.value = 'Не удалось загрузить каталог. Попробуйте ещё раз.'
   } finally {
     loading.value = false
   }
@@ -49,8 +49,8 @@ async function loadBooks(page = 1) {
 async function loadAuthors() {
   try {
     authors.value = (await getAuthors()).items
-  } catch (reason) {
-    authorsError.value = reason instanceof Error ? `Не удалось загрузить фильтр авторов: ${reason.message}` : 'Не удалось загрузить фильтр авторов.'
+  } catch {
+    authorsError.value = 'Не удалось загрузить фильтр авторов.'
   }
 }
 
@@ -84,13 +84,21 @@ onMounted(() => {
       </label>
       <label>
         <span>Год издания</span>
-        <input v-model="year" type="number" min="0" inputmode="numeric" placeholder="Например, 2024" />
+        <input
+          v-model="year"
+          type="number"
+          min="0"
+          inputmode="numeric"
+          placeholder="Например, 2024"
+        />
       </label>
       <label>
         <span>Автор</span>
         <select v-model="authorId">
           <option value="">Все авторы</option>
-          <option v-for="author in authors" :key="author.id" :value="String(author.id)">{{ author.full_name }}</option>
+          <option v-for="author in authors" :key="author.id" :value="String(author.id)">
+            {{ author.full_name }}
+          </option>
         </select>
         <small v-if="authorsError" class="filter-error">{{ authorsError }}</small>
       </label>
@@ -100,30 +108,61 @@ onMounted(() => {
     <div v-if="loading" class="catalog-status" aria-live="polite">Загружаем книги…</div>
     <div v-else-if="error" class="catalog-status catalog-status--error" role="alert">
       <p>{{ error }}</p>
-      <button class="button button--quiet" type="button" @click="loadBooks(pagination?.page)">Повторить</button>
+      <button class="button button--quiet" type="button" @click="loadBooks(pagination?.page)">
+        Повторить
+      </button>
     </div>
     <template v-else>
       <div v-if="books.length" class="book-grid">
-        <RouterLink v-for="book in books" :key="book.id" class="book-card" :to="{ name: 'book-detail', params: { id: book.id } }">
+        <RouterLink
+          v-for="book in books"
+          :key="book.id"
+          class="book-card"
+          :to="{ name: 'book-detail', params: { id: book.id } }"
+        >
           <div class="book-cover">
-            <img v-if="book.cover_url" :src="book.cover_url" :alt="`Обложка книги «${book.title}»`" />
+            <img
+              v-if="book.cover_url"
+              :src="book.cover_url"
+              :alt="`Обложка книги «${book.title}»`"
+            />
             <span v-else aria-hidden="true">Нет обложки</span>
           </div>
           <div class="book-card__body">
             <p class="book-year">{{ book.year }}</p>
             <h2>{{ book.title }}</h2>
-            <p class="book-authors">{{ book.authors.map((author) => author.full_name).join(', ') || 'Автор не указан' }}</p>
+            <p class="book-authors">
+              {{ book.authors.map((author) => author.full_name).join(', ') || 'Автор не указан' }}
+            </p>
             <p v-if="book.isbn" class="book-isbn">ISBN {{ book.isbn }}</p>
-            <p v-if="book.description" class="book-description">{{ shortDescription(book.description) }}</p>
+            <p v-if="book.description" class="book-description">
+              {{ shortDescription(book.description) }}
+            </p>
           </div>
         </RouterLink>
       </div>
       <p v-else class="catalog-status">По заданным фильтрам ничего не найдено.</p>
 
-      <nav v-if="pagination && pagination.total_pages > 1" class="pagination" aria-label="Страницы каталога">
-        <button class="button button--quiet" :disabled="pagination.page <= 1" @click="loadBooks(pagination.page - 1)">Назад</button>
+      <nav
+        v-if="pagination && pagination.total_pages > 1"
+        class="pagination"
+        aria-label="Страницы каталога"
+      >
+        <button
+          class="button button--quiet"
+          :disabled="pagination.page <= 1"
+          @click="loadBooks(pagination.page - 1)"
+        >
+          Назад
+        </button>
         <span>Страница {{ pagination.page }} из {{ pagination.total_pages }}</span>
-        <button class="button button--quiet" :disabled="pagination.page >= pagination.total_pages" @click="loadBooks(pagination.page + 1)">Далее</button>
+        <button
+          class="button button--quiet"
+          :disabled="pagination.page >= pagination.total_pages"
+          @click="loadBooks(pagination.page + 1)"
+        >
+          Далее
+        </button>
       </nav>
     </template>
   </section>
