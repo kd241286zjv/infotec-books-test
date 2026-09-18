@@ -130,6 +130,23 @@ h2 { margin-bottom: .45rem; font-size: 1.15rem; line-height: 1.25; }
 .current-cover p { margin-bottom: 0; color: #3d4d43; font-size: .9rem; font-weight: 700; }
 .current-cover img { width: 150px; height: 210px; border-radius: .4rem; object-fit: cover; background: #e8eee9; }
 .form-actions { display: flex; gap: .75rem; margin-top: .5rem; }
+.authors-search { display: flex; align-items: end; gap: .75rem; max-width: 620px; margin-bottom: 1.5rem; }
+.authors-search label { display: grid; flex: 1; gap: .35rem; color: #3d4d43; font-size: .85rem; font-weight: 700; }
+.authors-search input { width: 100%; min-height: 2.6rem; padding: .55rem .7rem; border: 1px solid #b8c5bb; border-radius: .4rem; color: inherit; background: #fff; }
+.authors-list { display: grid; gap: .75rem; }
+.author-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.15rem; border: 1px solid #dce4dd; border-radius: .6rem; background: #fff; }
+.author-card__link { color: #193d2d; font-weight: 750; text-decoration: none; }
+.author-card__link:hover { text-decoration: underline; }
+.author-card__actions { display: flex; gap: 1rem; align-items: center; font-size: .9rem; }
+.author-card__actions a { color: #176044; }
+.link-danger { padding: 0; border: 0; color: #a83423; background: transparent; text-decoration: underline; }
+.author-detail__card { padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid #dce4dd; border-radius: .75rem; background: #fff; box-shadow: 0 4px 18px rgba(26, 50, 38, .05); }
+.author-books { display: grid; gap: .6rem; padding-left: 1.2rem; color: #176044; }
+.author-books a { text-underline-offset: 3px; }
+.author-books span { color: #63736a; }
+.author-form { display: grid; gap: 1rem; padding: clamp(1.25rem, 4vw, 2rem); border: 1px solid #dce4dd; border-radius: .75rem; background: #fff; box-shadow: 0 4px 18px rgba(26, 50, 38, .05); }
+.author-form label { display: grid; gap: .35rem; color: #3d4d43; font-size: .9rem; font-weight: 700; }
+.author-form input { min-height: 2.6rem; padding: .55rem .7rem; border: 1px solid #b8c5bb; border-radius: .4rem; color: inherit; }
 
 @media (max-width: 760px) {
   .site-header { flex-wrap: wrap; gap: .75rem 1.25rem; }
@@ -141,4 +158,6 @@ h2 { margin-bottom: .45rem; font-size: 1.15rem; line-height: 1.25; }
   .book-cover { height: 230px; }
   .book-detail__card { grid-template-columns: 1fr; }
   .book-detail__cover { min-height: 300px; max-height: 460px; }
+  .authors-search { align-items: stretch; flex-direction: column; }
+  .author-card { align-items: flex-start; flex-direction: column; }
 }

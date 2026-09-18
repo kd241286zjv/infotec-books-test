@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { auth } from '../composables/useAuth'
 import AuthorDetailView from '../views/AuthorDetailView.vue'
+import AuthorFormView from '../views/AuthorFormView.vue'
 import AuthorsView from '../views/AuthorsView.vue'
 import BookDetailView from '../views/BookDetailView.vue'
 import BookFormView from '../views/BookFormView.vue'
@@ -18,6 +19,8 @@ const router = createRouter({
     { path: '/books/:id/edit', name: 'book-edit', component: BookFormView, meta: { requiresAuth: true } },
     { path: '/books/:id', name: 'book-detail', component: BookDetailView },
     { path: '/authors', name: 'authors', component: AuthorsView },
+    { path: '/authors/new', name: 'author-create', component: AuthorFormView, meta: { requiresAuth: true } },
+    { path: '/authors/:id/edit', name: 'author-edit', component: AuthorFormView, meta: { requiresAuth: true } },
     { path: '/authors/:id', name: 'author-detail', component: AuthorDetailView },
     { path: '/reports', name: 'reports', component: ReportsView },
   ],
