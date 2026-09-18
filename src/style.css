@@ -1,0 +1,112 @@
+:root {
+  color: #19251f;
+  background: #f6f7f3;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { min-width: 320px; margin: 0; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .6; }
+a { color: inherit; }
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: .4rem; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1; letter-spacing: -.055em; }
+h2 { margin-bottom: .45rem; font-size: 1.15rem; line-height: 1.25; }
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-height: 68px;
+  padding: .75rem max(4vw, 1rem);
+  color: #fff;
+  background: #173d2d;
+}
+.brand { color: #fff; font-size: 1.25rem; font-weight: 800; letter-spacing: -.04em; text-decoration: none; }
+.site-header nav { display: flex; gap: 1.15rem; }
+.site-header nav a { color: #d9e9df; text-decoration: none; }
+.site-header nav a.router-link-active { color: #fff; border-bottom: 2px solid #f0bd61; }
+.header-actions { display: flex; gap: .6rem; margin-left: auto; }
+.page-shell { width: min(1160px, calc(100% - 2rem)); margin: 0 auto; padding: 3rem 0 4rem; }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: .55rem 1rem;
+  border: 1px solid #176044;
+  border-radius: .45rem;
+  color: #fff;
+  background: #176044;
+  font-weight: 700;
+  text-decoration: none;
+}
+.button--quiet { color: #176044; background: transparent; }
+.site-header .button--quiet { color: #fff; border-color: #89af9b; }
+.eyebrow { margin-bottom: .45rem; color: #397057; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.muted { color: #63736a; }
+
+.page-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.75rem; }
+.catalog-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) minmax(150px, .7fr) minmax(180px, 1fr) auto;
+  align-items: end;
+  gap: .85rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #dce4dd;
+  border-radius: .7rem;
+  background: #fff;
+}
+.catalog-filters label { display: grid; gap: .35rem; color: #3d4d43; font-size: .85rem; font-weight: 700; }
+.catalog-filters input, .catalog-filters select {
+  width: 100%;
+  min-height: 2.6rem;
+  padding: .55rem .7rem;
+  border: 1px solid #b8c5bb;
+  border-radius: .4rem;
+  color: inherit;
+  background: #fff;
+}
+.filter-error { color: #9f2d1c; font-weight: 500; }
+.catalog-status { padding: 2rem 1rem; color: #63736a; text-align: center; }
+.catalog-status--error { border: 1px solid #e7b6aa; border-radius: .65rem; color: #9f2d1c; background: #fff2ee; }
+.catalog-status--error .button { margin-top: .3rem; }
+.book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; }
+.book-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #dce4dd;
+  border-radius: .7rem;
+  color: inherit;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(26, 50, 38, .05);
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.book-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(26, 50, 38, .11); }
+.book-card:focus-visible { outline: 3px solid #e3a73d; outline-offset: 3px; }
+.book-cover { display: grid; height: 270px; place-items: center; overflow: hidden; color: #698074; background: #e8eee9; font-size: .9rem; }
+.book-cover img { width: 100%; height: 100%; object-fit: cover; }
+.book-card__body { display: flex; flex: 1; flex-direction: column; padding: 1rem; }
+.book-year { margin-bottom: .25rem; color: #397057; font-size: .8rem; font-weight: 800; }
+.book-authors { margin-bottom: .65rem; color: #3c5145; font-size: .92rem; }
+.book-isbn { margin-bottom: .7rem; color: #63736a; font-size: .78rem; }
+.book-description { margin-top: auto; margin-bottom: 0; color: #63736a; font-size: .9rem; line-height: 1.45; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 2rem; color: #4a5e51; }
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; gap: .75rem 1.25rem; }
+  .header-actions { margin-left: 0; }
+  .page-shell { padding-top: 2rem; }
+  .page-heading { align-items: stretch; flex-direction: column; }
+  .page-heading .button { align-self: flex-start; }
+  .catalog-filters { grid-template-columns: 1fr; }
+  .book-cover { height: 230px; }
+}
