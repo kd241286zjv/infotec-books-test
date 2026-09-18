@@ -115,6 +115,21 @@ h2 { margin-bottom: .45rem; font-size: 1.15rem; line-height: 1.25; }
 .auth-form label { display: grid; gap: .35rem; color: #3d4d43; font-size: .9rem; font-weight: 700; }
 .auth-form input { min-height: 2.6rem; padding: .55rem .7rem; border: 1px solid #b8c5bb; border-radius: .4rem; color: inherit; }
 .error { padding: .75rem; margin-bottom: 0; border: 1px solid #e7b6aa; border-radius: .45rem; color: #9f2d1c; background: #fff2ee; }
+.form-page { width: min(100%, 720px); margin: 0 auto; }
+.book-form { display: grid; gap: 1rem; padding: clamp(1.25rem, 4vw, 2rem); border: 1px solid #dce4dd; border-radius: .75rem; background: #fff; box-shadow: 0 4px 18px rgba(26, 50, 38, .05); }
+.book-form > label { display: grid; gap: .35rem; color: #3d4d43; font-size: .9rem; font-weight: 700; }
+.book-form input, .book-form textarea { width: 100%; padding: .6rem .7rem; border: 1px solid #b8c5bb; border-radius: .4rem; color: inherit; background: #fff; }
+.book-form input { min-height: 2.6rem; }
+.book-form textarea { resize: vertical; }
+.book-form small { color: #63736a; font-size: .8rem; font-weight: 500; }
+.author-selector { display: grid; gap: .6rem; padding: 1rem; border: 1px solid #dce4dd; border-radius: .5rem; }
+.author-selector legend { padding: 0 .25rem; color: #3d4d43; font-weight: 700; }
+.checkbox { display: flex; align-items: center; gap: .55rem; color: #3d4d43; }
+.checkbox input { width: auto; min-height: auto; }
+.current-cover { display: grid; gap: .5rem; }
+.current-cover p { margin-bottom: 0; color: #3d4d43; font-size: .9rem; font-weight: 700; }
+.current-cover img { width: 150px; height: 210px; border-radius: .4rem; object-fit: cover; background: #e8eee9; }
+.form-actions { display: flex; gap: .75rem; margin-top: .5rem; }
 
 @media (max-width: 760px) {
   .site-header { flex-wrap: wrap; gap: .75rem 1.25rem; }
