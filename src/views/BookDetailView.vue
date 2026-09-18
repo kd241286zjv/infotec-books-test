@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { ApiError } from '../api/client'
 import { deleteBook, getBook } from '../api/books'
@@ -59,6 +59,7 @@ async function removeBook() {
 }
 
 onMounted(() => { void loadBook() })
+watch(() => route.params.id, () => { void loadBook() })
 </script>
 
 <template>

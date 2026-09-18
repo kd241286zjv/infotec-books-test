@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { deleteAuthor, getAuthor } from '../api/authors'
 import { ApiError } from '../api/client'
@@ -56,6 +56,7 @@ async function removeAuthor() {
 }
 
 onMounted(() => { void loadAuthor() })
+watch(() => route.params.id, () => { void loadAuthor() })
 </script>
 
 <template>
