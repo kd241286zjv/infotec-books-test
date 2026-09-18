@@ -100,6 +100,16 @@ h2 { margin-bottom: .45rem; font-size: 1.15rem; line-height: 1.25; }
 .book-isbn { margin-bottom: .7rem; color: #63736a; font-size: .78rem; }
 .book-description { margin-top: auto; margin-bottom: 0; color: #63736a; font-size: .9rem; line-height: 1.45; }
 .pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 2rem; color: #4a5e51; }
+.back-link { display: inline-block; margin-bottom: 1.5rem; color: #176044; font-weight: 700; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+.book-detail__card { display: grid; grid-template-columns: minmax(230px, .75fr) minmax(0, 1.25fr); overflow: hidden; border: 1px solid #dce4dd; border-radius: .75rem; background: #fff; box-shadow: 0 4px 18px rgba(26, 50, 38, .05); }
+.book-detail__cover { display: grid; min-height: 420px; place-items: center; overflow: hidden; color: #698074; background: #e8eee9; }
+.book-detail__cover img { width: 100%; height: 100%; object-fit: cover; }
+.book-detail__content { padding: clamp(1.5rem, 4vw, 3rem); }
+.book-detail__authors { margin-bottom: 1rem; color: #3c5145; font-size: 1.1rem; }
+.book-detail__description { max-width: 70ch; color: #4a5e51; line-height: 1.6; white-space: pre-line; }
+.book-detail__actions { display: flex; gap: .75rem; margin-top: 2rem; }
+.button--danger { border-color: #a83423; background: #a83423; }
 
 @media (max-width: 760px) {
   .site-header { flex-wrap: wrap; gap: .75rem 1.25rem; }
@@ -109,4 +119,6 @@ h2 { margin-bottom: .45rem; font-size: 1.15rem; line-height: 1.25; }
   .page-heading .button { align-self: flex-start; }
   .catalog-filters { grid-template-columns: 1fr; }
   .book-cover { height: 230px; }
+  .book-detail__card { grid-template-columns: 1fr; }
+  .book-detail__cover { min-height: 300px; max-height: 460px; }
 }
